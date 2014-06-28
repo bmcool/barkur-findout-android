@@ -1,5 +1,34 @@
 <resources>
 
     <string name="app_name">Findout</string>
+    <string name="please_wait">請稍後...</string>
 
+    <!-- dialog -->
+    <string name="dialog_title_notify">提醒</string>
+    <string name="indemnification_clause">免責聲明</string>
+    <string name="i_agree_indemnification_clause">我同意上述免責聲明</string>
+    <string name="log_in">登入</string>
+    <string name="confirm">確定</string>
+    <string name="modify">修改</string>
+    <string name="cancel">取消</string>
+    <string name="clear">清除</string>
+    <string name="register">註冊</string>
+    <string name="finish">結束</string>
+    <string name="skip">略過</string>
+    <string name="save">儲存</string>
+    <string name="go_to">前往</string>
+    <string name="retry">重試</string>
+    <string name="update">更新</string>
+    <string name="go_to_settings">前往設定</string>
+    <string name="network_error">網路異常，請確認已連接網路</string>
+    <string name="connection_error">連線異常</string>
+    <string name="connection_server_error">接收的資料錯誤，請稍後再試</string>
+    <string name="connection_timeout_error">連線逾時，請稍後再試</string>
+    <string name="install_google_play">此服務需安裝Google Play，將導引您前往安裝頁面</string>
+    <string name="save_file_to">檔案已儲存至%s</string>
+    <string name="please_enable_gps">請先開啓無線網路定位</string>
+    <string name="report_issue_success">已成功回報問題，感謝您的回饋，我們會儘快處理解決</string>
+    <string name="upload_image_fail">圖片上傳失敗</string>
+    <string name="do_you_want_to_retry">您是否要重試？</string>
+    
 </resources>
