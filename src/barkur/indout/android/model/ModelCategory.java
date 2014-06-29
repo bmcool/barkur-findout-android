@@ -1,8 +1,10 @@
 package barkur.indout.android.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ModelCategory {
+@SuppressWarnings("serial")
+public class ModelCategory implements Serializable {
 	public int id;
 	public String title;
 	public String icon;

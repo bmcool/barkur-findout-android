@@ -82,9 +82,32 @@ public class LandingActivity extends BaseActivity {
 			
 			@Override
 			public void onComplete() {
-				stopLoading();
-				startActivity(new Intent(mContext, MainActivity.class));
-				finish();
+				viewModel.getCategories(new API.onAPIResult() {
+					
+					@Override
+					public void onTimeout() {
+						finishAPP(getString(R.string.connection_error), getString(R.string.connection_timeout_error));
+					}
+					
+					@Override
+					public void onNoNetwork() {
+						finishAPP(getString(R.string.connection_error), getString(R.string.network_error));
+					}
+					
+					@Override
+					public void onFail() {
+						finishAPP(getString(R.string.connection_error), getString(R.string.connection_server_error));
+					}
+					
+					@Override
+					public void onComplete() {
+						stopLoading();
+						Intent intent = new Intent(mContext, MainActivity.class);
+						intent.putExtra("category", viewModel.categories);
+						startActivity(intent);
+						finish();
+					}
+				});
 			}
 		});
 	}
