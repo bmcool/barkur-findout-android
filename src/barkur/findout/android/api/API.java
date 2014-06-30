@@ -1,4 +1,4 @@
-package barkur.indout.android.api;
+package barkur.findout.android.api;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -13,9 +13,10 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
-import barkur.indout.android.model.ModelCategory;
-import barkur.indout.android.model.ModelDevice;
-import barkur.indout.android.model.ModelTag;
+import barkur.findout.android.model.ModelAPICategory;
+import barkur.findout.android.model.ModelCategory;
+import barkur.findout.android.model.ModelDevice;
+import barkur.findout.android.model.ModelTag;
 
 public class API {
 	private static RestApi _restApi;
@@ -38,7 +39,7 @@ public class API {
 		void login(@Field("device_id") String unique_id, Callback<ModelDevice> callback);
 		
 		@GET("/landmarks/category/")
-		void getCategory(@Header("Cookie") String cookie, @Header("X-CSRFToken") String csrf_toekn, Callback<ArrayList<ModelCategory>> callback);
+		void getCategory(@Header("Cookie") String cookie, @Header("X-CSRFToken") String csrf_toekn, Callback<ArrayList<ModelAPICategory>> callback);
 		
 		@GET("/landmarks/tag/")
 		void getTag(@Header("Cookie") String cookie, @Header("X-CSRFToken") String csrf_toekn, Callback<ArrayList<ModelTag>> callback);

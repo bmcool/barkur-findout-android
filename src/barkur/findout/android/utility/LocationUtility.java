@@ -1,4 +1,4 @@
-package barkur.indout.android.utility;
+package barkur.findout.android.utility;
 
 import android.content.Context;
 import android.location.LocationManager;

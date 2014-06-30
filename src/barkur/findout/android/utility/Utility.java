@@ -1,4 +1,4 @@
-package barkur.indout.android.utility;
+package barkur.findout.android.utility;
 
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import barkur.indout.android.R;
+import barkur.findout.android.R;
 
 public class Utility {
 

@@ -1,4 +1,4 @@
-package barkur.indout.android.viewmodel;
+package barkur.findout.android.viewmodel;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -7,16 +7,17 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.Response;
-import barkur.indout.android.BFragment;
-import barkur.indout.android.GridFragment;
-import barkur.indout.android.api.API;
-import barkur.indout.android.model.ModelCategory;
-import barkur.indout.android.model.ModelDevice;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
+import barkur.findout.android.api.API;
+import barkur.findout.android.api.ApiURL;
+import barkur.findout.android.model.ModelAPICategory;
+import barkur.findout.android.model.ModelCategory;
+import barkur.findout.android.model.ModelDevice;
+import barkur.findout.android.model.ModelTag;
 
 public class ViewModelLanding extends ViewModelBase {
+	private ArrayList<ModelAPICategory> api_categories;
 	public ArrayList<ModelCategory> categories;
 	
 	public ViewModelLanding(Context context) {
@@ -70,7 +71,7 @@ public class ViewModelLanding extends ViewModelBase {
 	}
 	
 	public void getCategories(final API.onAPIResult callback) {
-		API.getInstance().getCategory(API.getCookie(), API.getCsrfToken(), new Callback<ArrayList<ModelCategory>>() {
+		API.getInstance().getCategory(API.getCookie(), API.getCsrfToken(), new Callback<ArrayList<ModelAPICategory>>() {
 
 			@Override
 			public void failure(RetrofitError error) {
@@ -87,13 +88,63 @@ public class ViewModelLanding extends ViewModelBase {
 			}
 
 			@Override
-			public void success(ArrayList<ModelCategory> list, Response response) {
+			public void success(ArrayList<ModelAPICategory> list, Response response) {
 				Log.i(TAG, "id:" + list.get(0).id);
 				Log.i(TAG, "title:" + list.get(0).title);
 				Log.i(TAG, "icon:" + list.get(0).icon);
 				Log.i(TAG, "tag id:" + list.get(0).tags.get(0));
-				categories = list;
+				api_categories = list;
 				callback.onComplete();
+			}
+		});
+	}
+	
+	public void getTags(final API.onAPIResult callback) {
+		API.getInstance().getTag(API.getCookie(), API.getCsrfToken(), new Callback<ArrayList<ModelTag>>() {
+			
+			@Override
+			public void success(ArrayList<ModelTag> list, Response response) {
+				categories = new ArrayList<ModelCategory>();
+				for (ModelAPICategory api_category : api_categories) {
+					ModelCategory category = new ModelCategory();
+					category.id = api_category.id;
+					category.title = api_category.title;
+					category.icon = ApiURL.IMAGE_PREFIX + api_category.icon;
+					category.tags = new ArrayList<ModelTag>();
+					for (int tag_id : api_category.tags) {
+						ModelTag tag = new ModelTag();
+						tag.id = tag_id;
+						category.tags.add(tag);
+					}
+					categories.add(category);
+				}
+				
+				for (ModelCategory category : categories) {
+					for (ModelTag tag : category.tags) {
+						for (ModelTag api_tag : list) {
+							if (api_tag.id == tag.id) {
+								tag.title = api_tag.title;
+								tag.icon = ApiURL.IMAGE_PREFIX + api_tag.icon;
+							}
+						}
+					}
+				}
+				
+				callback.onComplete();
+			}
+			
+			@Override
+			public void failure(RetrofitError error) {
+				Log.e(getClass().getSimpleName(), "getCategory error: " + error.getMessage());
+				if (error.isNetworkError()) {
+					if (error.getCause() instanceof SocketTimeoutException) {
+						callback.onTimeout();
+					} else {
+						callback.onNoNetwork();
+					}
+				} else {
+					callback.onFail();
+				}
 			}
 		});
 	}

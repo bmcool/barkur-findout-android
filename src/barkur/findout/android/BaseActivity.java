@@ -1,4 +1,4 @@
-package barkur.indout.android;
+package barkur.findout.android;
 
 import java.util.ArrayList;
 

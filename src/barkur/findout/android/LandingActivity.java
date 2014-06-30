@@ -1,4 +1,4 @@
-package barkur.indout.android;
+package barkur.findout.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
-import barkur.indout.android.api.API;
-import barkur.indout.android.utility.LocationUtility;
-import barkur.indout.android.utility.RequestCode;
-import barkur.indout.android.utility.Utility;
-import barkur.indout.android.viewmodel.ViewModelLanding;
+import barkur.findout.android.api.API;
+import barkur.findout.android.utility.LocationUtility;
+import barkur.findout.android.utility.RequestCode;
+import barkur.findout.android.utility.Utility;
+import barkur.findout.android.viewmodel.ViewModelLanding;
 
 public class LandingActivity extends BaseActivity {
 	private ViewModelLanding viewModel;
@@ -101,11 +101,32 @@ public class LandingActivity extends BaseActivity {
 					
 					@Override
 					public void onComplete() {
-						stopLoading();
-						Intent intent = new Intent(mContext, MainActivity.class);
-						intent.putExtra("category", viewModel.categories);
-						startActivity(intent);
-						finish();
+						viewModel.getTags(new API.onAPIResult() {
+							
+							@Override
+							public void onTimeout() {
+								finishAPP(getString(R.string.connection_error), getString(R.string.connection_timeout_error));
+							}
+							
+							@Override
+							public void onNoNetwork() {
+								finishAPP(getString(R.string.connection_error), getString(R.string.network_error));
+							}
+							
+							@Override
+							public void onFail() {
+								finishAPP(getString(R.string.connection_error), getString(R.string.connection_server_error));
+							}
+							
+							@Override
+							public void onComplete() {
+								stopLoading();
+								Intent intent = new Intent(mContext, MainActivity.class);
+								intent.putExtra("category", viewModel.categories);
+								startActivity(intent);
+								finish();
+							}
+						});
 					}
 				});
 			}

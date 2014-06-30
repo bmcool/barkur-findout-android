@@ -1,4 +1,4 @@
-package barkur.indout.android.viewmodel;
+package barkur.findout.android.viewmodel;
 
 import android.content.Context;
 

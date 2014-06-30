@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_sky_blue">#AFD6FF</color>
+    <color name="dark_gray">#888888</color>
+    <color name="light_gray">#AAAAAA</color>
+    <color name="item_title_background">#CECECE</color>
+    <color name="item_title_gray">#8F8F8F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_white">#CCCCCC</color>
+    <color name="navigation_border">#396395</color>
+    <color name="background_light_yello">#F2DC9E</color>
+    
+    <color name="chat_view_bg">#EBEBEB</color>
+    <color name="chat_edit_top_bottom_line">#A2A2A2</color>
+</resources>
